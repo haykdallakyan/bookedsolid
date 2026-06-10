@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
 
     await resend.emails.send({
       from: "The Conversion Machine <onboarding@resend.dev>",
-      to: "haykdallakyan07@gmail.com",
+      to: "hay.dallakyan@outlook.com",
       replyTo: email,
       subject: `New Lead: ${firstName} — ${businessName}`,
       html: `
