@@ -5,8 +5,6 @@ import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import emailjs from "@emailjs/browser";
-
 type FormData = {
   firstName: string;
   businessName: string;
@@ -34,31 +32,15 @@ export default function ContactForm() {
     setSending(true);
     setError("");
     try {
-      // EmailJS: replace with your actual service/template/public key
-      // or use a simple mailto fallback
-      await emailjs.send(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_id",
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_id",
-        {
-          from_name: data.firstName,
-          business_name: data.businessName,
-          business_type: data.businessType,
-          phone: data.phone,
-          reply_to: data.email,
-          package: data.package,
-          message: data.message || "No additional message.",
-          to_email: "haykdallakyan07@gmail.com",
-        },
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "public_key"
-      );
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error("Server error");
       setSubmitted(true);
     } catch {
-      // Fallback: open mailto
-      const body = encodeURIComponent(
-        `Name: ${data.firstName}\nBusiness: ${data.businessName}\nType: ${data.businessType}\nPhone: ${data.phone}\nEmail: ${data.email}\nPackage: ${data.package}\nMessage: ${data.message}`
-      );
-      window.location.href = `mailto:haykdallakyan07@gmail.com?subject=New Lead: ${data.businessName}&body=${body}`;
-      setSubmitted(true);
+      setError("Something went wrong. Please email us directly at haykdallakyan07@gmail.com");
     } finally {
       setSending(false);
     }
