@@ -37,7 +37,7 @@ export default function Footer() {
 
         <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
           <p className="text-gray-500 text-xs">
-            © 2025 The Conversion Machine. All rights reserved.
+            © 2026 The Conversion Machine. All rights reserved.
           </p>
           <p className="text-gray-500 text-xs">Built for GTA local businesses.</p>
         </div>

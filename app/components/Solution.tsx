@@ -70,8 +70,8 @@ export default function Solution() {
             transition={{ duration: 0.5 }}
             className="text-3xl sm:text-4xl font-extrabold text-white"
           >
-            Two Texts.{" "}
-            <span className="text-[#E87722]">That&apos;s All You Do.</span>
+            3 Automations.{" "}
+            <span className="text-[#E87722]">Zero Manual Work.</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}
@@ -79,24 +79,42 @@ export default function Solution() {
             transition={{ delay: 0.15, duration: 0.5 }}
             className="mt-4 text-gray-300 text-lg max-w-xl mx-auto"
           >
-            Send two simple commands from your phone. The machine handles
-            everything else — automatically.
+            Three systems running in the background — catching missed leads,
+            closing quotes, and collecting reviews — automatically.
           </motion.p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-3 gap-6 items-start">
           {/* Flow diagram */}
           <motion.div
             initial={{ opacity: 0, x: -24 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="space-y-8"
+            className="space-y-6 lg:col-span-2"
           >
+            {/* Missed Call flow */}
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="bg-[#E87722] text-white text-xs font-bold px-3 py-1 rounded-full">
+                  AUTO 1
+                </div>
+                <code className="text-[#E87722] font-mono text-sm font-bold">
+                  MISSED CALL → TEXT-BACK
+                </code>
+              </div>
+              <div className="space-y-3">
+                <FlowStep label="Customer calls — goes unanswered" />
+                <FlowStep label="Text fires automatically in under 10 seconds" accent />
+                <FlowStep label="&ldquo;Hi! Sorry we missed you — we&apos;re on a job. We&apos;ll call you back shortly.&rdquo;" />
+                <FlowStep label="Lead stays warm instead of calling your competitor" accent />
+              </div>
+            </div>
+
             {/* Quote flow */}
             <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
               <div className="flex items-center gap-3 mb-5">
                 <div className="bg-[#E87722] text-white text-xs font-bold px-3 py-1 rounded-full">
-                  TEXT 1
+                  AUTO 2
                 </div>
                 <code className="text-[#E87722] font-mono text-sm font-bold">
                   QUOTE +16471234567 2500
@@ -118,7 +136,7 @@ export default function Solution() {
             <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
               <div className="flex items-center gap-3 mb-5">
                 <div className="bg-[#E87722] text-white text-xs font-bold px-3 py-1 rounded-full">
-                  TEXT 2
+                  AUTO 3
                 </div>
                 <code className="text-[#E87722] font-mono text-sm font-bold">
                   DONE +16471234567

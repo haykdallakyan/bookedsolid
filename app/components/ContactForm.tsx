@@ -40,7 +40,7 @@ export default function ContactForm() {
       if (!res.ok) throw new Error("Server error");
       setSubmitted(true);
     } catch {
-      setError("Something went wrong. Please email us directly at haykdallakyan07@gmail.com");
+      setError("Something went wrong. Please email us directly at admin@bookedsolid.live");
     } finally {
       setSending(false);
     }
@@ -189,7 +189,7 @@ export default function ContactForm() {
                     Which package are you interested in?
                   </p>
                   <div className="flex flex-wrap gap-4">
-                    {["Starter — $497", "Pro — $797", "Not Sure"].map((pkg) => (
+                    {["Website — $497 + $47/mo", "Automation Bundle — $297 + $147/mo", "Not Sure"].map((pkg) => (
                       <label key={pkg} className="flex items-center gap-2 cursor-pointer">
                         <input
                           type="radio"
@@ -257,7 +257,7 @@ export default function ContactForm() {
                 </a>
 
                 <a
-                  href="mailto:haykdallakyan07@gmail.com"
+                  href="mailto:admin@bookedsolid.live"
                   className="flex items-center gap-4 group cursor-pointer"
                 >
                   <div className="w-12 h-12 bg-[#1B2A4A] rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-[#E87722] transition-colors duration-200">
@@ -267,7 +267,7 @@ export default function ContactForm() {
                   </div>
                   <div>
                     <p className="text-xs text-gray-400 font-medium">Email</p>
-                    <p className="text-[#1B2A4A] font-semibold break-all">haykdallakyan07@gmail.com</p>
+                    <p className="text-[#1B2A4A] font-semibold break-all">admin@bookedsolid.live</p>
                   </div>
                 </a>
 

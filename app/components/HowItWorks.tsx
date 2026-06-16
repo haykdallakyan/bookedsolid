@@ -26,7 +26,7 @@ const steps = [
     ),
     title: "We Set Up Your Automations",
     description:
-      "Quote follow-up and review request sequences configured, tested, and ready before we hand it over. You don't touch a thing.",
+      "All 3 automations configured and tested: missed call text-back, quote follow-up sequence, and review request. Ready before we hand it over — you don't touch a thing.",
   },
   {
     num: "03",
@@ -35,9 +35,9 @@ const steps = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
       </svg>
     ),
-    title: "You Just Text",
+    title: "The System Runs Itself",
     description:
-      "Two commands from your phone. The machine handles every follow-up, every review request, every time — without you having to remember.",
+      "Missed calls get texted back instantly. Quotes get followed up automatically. Jobs done trigger review requests. All three run 24/7 without you lifting a finger.",
   },
 ];
 

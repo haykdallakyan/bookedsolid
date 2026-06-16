@@ -112,9 +112,9 @@ export default function Hero() {
               animate="visible"
               className="text-gray-500 text-lg leading-relaxed mb-8 max-w-xl"
             >
-              We build websites and SMS automations for GTA local businesses —
-              so you close more jobs and collect more 5-star reviews, with two
-              text messages.
+              We build websites and 3 SMS automations for GTA local businesses —
+              so you never miss a lead, close more quotes, and collect more
+              5-star reviews, automatically.
             </motion.p>
 
             <motion.div
@@ -145,10 +145,6 @@ export default function Hero() {
               animate="visible"
               className="mt-8 flex items-center gap-6 text-sm text-gray-400"
             >
-              <span className="flex items-center gap-2">
-                <svg className="w-4 h-4 text-[#E87722]" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                No monthly fees
-              </span>
               <span className="flex items-center gap-2">
                 <svg className="w-4 h-4 text-[#E87722]" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
                 Live in 7 days

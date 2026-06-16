@@ -14,37 +14,35 @@ function CheckIcon() {
 
 const plans = [
   {
-    name: "Starter",
-    price: "$497",
-    period: "one-time",
+    name: "Website Development",
+    setup: "$497",
+    monthly: "$47",
     badge: null,
     description: "Get found online with a professional website.",
     features: [
       "5-page professional website",
       "Mobile-first, fast-loading design",
-      "Contact form included",
-      "Basic on-page SEO",
+      "Contact form + click-to-call",
+      "On-page SEO for local search",
       "Google Business Profile setup",
-      "Done-for-you setup",
-      "No monthly fees",
+      "Done-for-you setup — live in 7 days",
     ],
     cta: "Get Started",
     highlighted: false,
   },
   {
-    name: "Pro",
-    price: "$797",
-    period: "one-time",
+    name: "Automation Bundle",
+    setup: "$297",
+    monthly: "$147",
     badge: "Most Popular",
-    description: "Website + full automation suite. The complete machine.",
+    description: "3 automations that run on autopilot — zero manual work.",
     features: [
-      "Everything in Starter",
-      "SMS quote follow-up automation",
-      "4-touch follow-up sequence",
-      "Google review request automation",
-      "Owner SMS command setup (QUOTE / DONE)",
-      "Testing & handoff included",
-      "No monthly fees. No software to learn.",
+      "Missed call → instant text-back",
+      "Quote follow-up (4-touch sequence)",
+      "Google review request after every job",
+      "Runs from your existing phone number",
+      "No apps — fully automatic",
+      "One saved job covers the monthly fee",
     ],
     cta: "Get Started",
     highlighted: true,
@@ -83,7 +81,7 @@ export default function Pricing() {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="mt-4 text-gray-500 text-lg"
           >
-            Setup done for you. No monthly fees. No software to learn.
+            Setup done for you. Everything configured and tested before handoff.
           </motion.p>
         </div>
 
@@ -118,12 +116,22 @@ export default function Pricing() {
               </div>
 
               <div className="mb-6">
-                <span className={`text-5xl font-extrabold ${plan.highlighted ? "text-white" : "text-[#1B2A4A]"}`}>
-                  {plan.price}
-                </span>
-                <span className={`ml-2 text-sm ${plan.highlighted ? "text-gray-300" : "text-gray-400"}`}>
-                  {plan.period}
-                </span>
+                <div className="flex items-baseline gap-2 mb-1">
+                  <span className={`text-4xl font-extrabold ${plan.highlighted ? "text-white" : "text-[#1B2A4A]"}`}>
+                    {(plan as {setup: string}).setup}
+                  </span>
+                  <span className={`text-sm ${plan.highlighted ? "text-gray-300" : "text-gray-400"}`}>
+                    setup
+                  </span>
+                </div>
+                <div className="flex items-baseline gap-1">
+                  <span className={`text-2xl font-bold ${plan.highlighted ? "text-[#E87722]" : "text-[#E87722]"}`}>
+                    {(plan as {monthly: string}).monthly}
+                  </span>
+                  <span className={`text-sm ${plan.highlighted ? "text-gray-300" : "text-gray-400"}`}>
+                    / month
+                  </span>
+                </div>
               </div>
 
               <ul className="space-y-3 mb-8 flex-1">
