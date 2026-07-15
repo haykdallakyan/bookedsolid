@@ -134,7 +134,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 
 export default function HVACLanding() {
   const router = useRouter();
-  const [sending, setSending] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
 
   const {
@@ -144,10 +144,32 @@ export default function HVACLanding() {
   } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
-    setSending(true);
+    setSubmitting(true);
     setError("");
-    console.log(data);
-    router.push("/thank-you");
+    try {
+      const res = await fetch(
+        "https://hook.us2.make.com/o5rdy39ltfromp42et2kl0e4hk5unb8w",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            first_name: data.firstName,
+            business_name: data.businessName,
+            phone: data.phone,
+            email: data.email,
+            notes: data.notes ?? "",
+            timestamp: new Date().toISOString(),
+            event_source_url: window.location.href,
+          }),
+        }
+      );
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      router.push("/thank-you");
+    } catch {
+      alert("Something went wrong — please text us at (437) 988-8484");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const scrollToDemo = () => {
@@ -598,10 +620,10 @@ export default function HVACLanding() {
             {error && <p className="text-red-500 text-sm">{error}</p>}
             <button
               type="submit"
-              disabled={sending}
+              disabled={submitting}
               className="w-full bg-[#E87722] text-white py-4 rounded-xl font-bold text-base hover:bg-orange-600 transition-colors duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {sending ? "Sending..." : "Send My Info →"}
+              {submitting ? "Sending..." : "Send My Info →"}
             </button>
           </form>
         </div>
