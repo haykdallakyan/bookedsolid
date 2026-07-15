@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
+import { useState, useEffect } from "react";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
@@ -11,7 +12,98 @@ const fadeUp: Variants = {
   }),
 };
 
+type MsgFrom = "owner" | "system" | "customer";
+
+const CHAT: { from: MsgFrom; text: string }[] = [
+  { from: "owner",    text: "QUOTE +16471234567 2500" },
+  { from: "system",   text: "✓ Quote sent! Mike will receive a follow-up in 24 hours." },
+  { from: "customer", text: "Hi Mike! We sent you a quote for $2,500. Any questions? Reply YES to confirm." },
+  { from: "owner",    text: "DONE +16471234567" },
+  { from: "customer", text: "Thanks Mike! Happy with the service? Leave us a Google review: bit.ly/review ⭐" },
+];
+
+function TypingDots({ align }: { align: "left" | "right" }) {
+  return (
+    <motion.div
+      className={`flex ${align === "right" ? "justify-end" : "justify-start"}`}
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.2 }}
+    >
+      <div className="bg-white border border-gray-200 rounded-2xl px-3 py-2 shadow-sm flex gap-1 items-center">
+        {[0, 1, 2].map((i) => (
+          <motion.span
+            key={i}
+            className="block w-1.5 h-1.5 rounded-full bg-gray-400"
+            animate={{ y: [0, -3, 0] }}
+            transition={{ duration: 0.5, repeat: Infinity, delay: i * 0.15 }}
+          />
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
+function MessageBubble({ msg }: { msg: { from: MsgFrom; text: string } }) {
+  const isRight = msg.from === "owner";
+  return (
+    <motion.div
+      className={`flex ${isRight ? "justify-end" : "justify-start"}`}
+      initial={{ opacity: 0, x: isRight ? 14 : -14 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
+    >
+      <div
+        className={`text-[10px] rounded-2xl px-3 py-2 max-w-[85%] shadow-sm ${
+          msg.from === "owner"
+            ? "bg-[#1B2A4A] text-white rounded-tr-sm"
+            : msg.from === "system"
+            ? "bg-white border border-gray-200 text-gray-700 rounded-tl-sm"
+            : "bg-[#E87722] text-white rounded-tl-sm"
+        }`}
+      >
+        {msg.text}
+      </div>
+    </motion.div>
+  );
+}
+
 function PhoneMockup() {
+  const [visibleCount, setVisibleCount] = useState(0);
+  const [isTyping, setIsTyping] = useState(false);
+  const [cycleKey, setCycleKey] = useState(0);
+
+  useEffect(() => {
+    const TYPING_MS  = 1100;
+    const PAUSE_MS   = 700;
+    const LOOP_PAUSE = 2500;
+
+    let t: ReturnType<typeof setTimeout>;
+
+    const runStep = (index: number) => {
+      if (index >= CHAT.length) {
+        t = setTimeout(() => {
+          setVisibleCount(0);
+          setIsTyping(false);
+          t = setTimeout(() => setCycleKey((k) => k + 1), 400);
+        }, LOOP_PAUSE);
+        return;
+      }
+      setIsTyping(true);
+      t = setTimeout(() => {
+        setVisibleCount(index + 1);
+        setIsTyping(false);
+        t = setTimeout(() => runStep(index + 1), PAUSE_MS);
+      }, TYPING_MS);
+    };
+
+    t = setTimeout(() => runStep(0), 600);
+    return () => clearTimeout(t);
+  }, [cycleKey]);
+
+  const nextFrom = CHAT[visibleCount]?.from;
+  const typingAlign = nextFrom === "owner" ? "right" : "left";
+
   return (
     <div className="relative mx-auto w-64 h-[480px]">
       {/* Phone frame */}
@@ -33,38 +125,12 @@ function PhoneMockup() {
             <p className="text-gray-300 text-[9px]">Automation System</p>
           </div>
         </div>
-        {/* Messages */}
+        {/* Animated messages */}
         <div className="flex-1 bg-gray-50 p-3 flex flex-col gap-2 overflow-hidden">
-          {/* Owner texts */}
-          <div className="flex justify-end">
-            <div className="bg-[#1B2A4A] text-white text-[10px] rounded-2xl rounded-tr-sm px-3 py-2 max-w-[80%]">
-              QUOTE +16471234567 2500
-            </div>
-          </div>
-          {/* Auto-reply */}
-          <div className="flex justify-start">
-            <div className="bg-white border border-gray-200 text-gray-700 text-[10px] rounded-2xl rounded-tl-sm px-3 py-2 max-w-[85%] shadow-sm">
-              ✓ Quote sent! Mike will receive a follow-up in 24 hours.
-            </div>
-          </div>
-          {/* Customer sms */}
-          <div className="flex justify-start">
-            <div className="bg-[#E87722] text-white text-[10px] rounded-2xl rounded-tl-sm px-3 py-2 max-w-[85%] shadow-sm">
-              Hi Mike! We sent you a quote for $2,500. Any questions? Reply YES to confirm.
-            </div>
-          </div>
-          {/* done trigger */}
-          <div className="flex justify-end mt-1">
-            <div className="bg-[#1B2A4A] text-white text-[10px] rounded-2xl rounded-tr-sm px-3 py-2 max-w-[80%]">
-              DONE +16471234567
-            </div>
-          </div>
-          {/* review request */}
-          <div className="flex justify-start">
-            <div className="bg-[#E87722] text-white text-[10px] rounded-2xl rounded-tl-sm px-3 py-2 max-w-[85%] shadow-sm">
-              Thanks Mike! Happy with the service? Leave us a Google review: bit.ly/review ⭐
-            </div>
-          </div>
+          {CHAT.slice(0, visibleCount).map((msg, i) => (
+            <MessageBubble key={i} msg={msg} />
+          ))}
+          {isTyping && <TypingDots align={typingAlign} />}
         </div>
       </div>
       {/* Home button */}
